@@ -3,7 +3,7 @@ import axios from 'axios';
 // const url = 'https://memories-first-backend-app.herokuapp.com/posts';
 // const url = 'https://localhost:5000/posts';
 
-const API = axios.create({ baseURL: 'http://localhost:5000' });
+const API = axios.create({ baseURL: 'https://mern-memories-first.herokuapp.com' });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem('profile')) {
