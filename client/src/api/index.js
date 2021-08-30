@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-// const url = 'https://memories-first-backend-app.herokuapp.com/posts';
+// const url = 'https://mern-memories-first.herokuapp.com';
 // const url = 'https://localhost:5000/posts';
 
 const API = axios.create({ baseURL: 'https://mern-memories-first.herokuapp.com' });

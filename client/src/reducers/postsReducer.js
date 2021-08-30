@@ -57,7 +57,16 @@ const reducer = (state, action) => {
       };
 
     case LIKE_POST:
-      const updatedPostWithLike = state.posts.map((post) => (post._id === action.payload._id ? action.payload : post));
+      // const updatedPostWithLike = state.posts.map((post) => (post._id === action.payload._id ? action.payload : post));
+      const updatedPostWithLike = state.posts.map((post) => {
+        if (post._id === action.payload.postId) {
+          return {
+            ...post,
+            likes: action.payload.updatedLike,
+          };
+        }
+        return post;
+      });
       return {
         ...state,
         posts: updatedPostWithLike,

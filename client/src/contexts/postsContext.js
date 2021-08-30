@@ -62,9 +62,12 @@ const clearCurId = (dispatch) => dispatch({ type: CLEAR_CURRENT_ID });
 const likePost = async (dispatch, id) => {
   try {
     const { data } = await api.likePost(id);
-    const updatedPost = data.data.updatedPost;
+    const updatedLike = data.data;
+    const postId = data.id;
 
-    dispatch({ type: LIKE_POST, payload: updatedPost });
+    const updatedInfo = { updatedLike, postId };
+
+    dispatch({ type: LIKE_POST, payload: updatedInfo });
   } catch (error) {
     console.log(error);
   }
