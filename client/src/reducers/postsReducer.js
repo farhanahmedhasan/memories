@@ -1,5 +1,6 @@
 import {
   FETCH_ALL_POST,
+  SEARCHPOST,
   CREATE_A_POST,
   UPDATE_A_POST,
   DELETE_POST,
@@ -16,6 +17,12 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case FETCH_ALL_POST:
+      return {
+        ...state,
+        posts: action.payload,
+      };
+
+    case SEARCHPOST:
       return {
         ...state,
         posts: action.payload,

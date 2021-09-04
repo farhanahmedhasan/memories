@@ -4,6 +4,7 @@ import { reducer, initialState } from '../reducers/postsReducer';
 import * as api from '../api';
 import {
   FETCH_ALL_POST,
+  SEARCHPOST,
   CREATE_A_POST,
   UPDATE_A_POST,
   DELETE_POST,
@@ -73,6 +74,22 @@ const likePost = async (dispatch, id) => {
   }
 };
 
+//Searching Query And Tags
+const getPostBySearch = async (dispatch, searchObject) => {
+  console.log(searchObject);
+  const {
+    data: { data },
+  } = await api.fetchPostBySearch(searchObject);
+
+  console.log(data);
+
+  dispatch({ type: SEARCHPOST, payload: data });
+  try {
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 //Creating Context
 const PostContext = React.createContext();
 
@@ -100,4 +117,5 @@ export {
   updatePost,
   deletePost,
   likePost,
+  getPostBySearch,
 };

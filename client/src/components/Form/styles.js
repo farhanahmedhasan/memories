@@ -9,8 +9,6 @@ export default makeStyles((theme) => ({
 
   paper: {
     padding: '1rem',
-    position: 'sticky',
-    top: '5vh',
   },
 
   form: {

@@ -1,4 +1,5 @@
 export const FETCH_ALL_POST = 'FETCH_ALL_POST';
+export const SEARCHPOST = 'SEARCH_POST';
 export const CREATE_A_POST = 'CREATE_A_POST';
 export const UPDATE_A_POST = 'UPDATE_A_POST';
 export const DELETE_POST = 'DELETE_POST';

@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 // const url = 'https://mern-memories-first.herokuapp.com';
-// const url = 'https://localhost:5000/posts';
+// const url = 'http://localhost:5000';
 
-const API = axios.create({ baseURL: 'https://mern-memories-first.herokuapp.com' });
+const API = axios.create({ baseURL: 'http://localhost:5000' });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem('profile')) {
@@ -19,5 +19,10 @@ export const updatePost = (id, updatedPost) => API.patch(`/posts/${id}`, updated
 export const deletePost = (id) => API.delete(`/posts/${id}`);
 export const likePost = (id) => API.patch(`/posts/${id}/likePost`);
 
+//Auth
 export const signin = (formdata) => API.post('user/signin', formdata);
 export const signup = (formdata) => API.post('user/signup', formdata);
+
+//Search Post
+export const fetchPostBySearch = (searchObject) =>
+  API.get(`/posts/search?searchQuery=${searchObject.search || 'none'}&tags=${searchObject.tags}`);

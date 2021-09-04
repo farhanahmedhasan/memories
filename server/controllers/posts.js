@@ -1,6 +1,9 @@
 import postMessage from '../models/postModel.js';
 import mongoose from 'mongoose';
 
+//params ---> /posts/12323  --> id = 12323 (Populates the id variable)
+//Query  ---> /posts?page=1 --> page=1 (pageVariable = 1)
+
 //Create A Post
 export const createPost = async (req, res) => {
   try {
@@ -35,6 +38,20 @@ export const getPosts = async (req, res) => {
     res.status(404).json({
       message: err,
     });
+  }
+};
+
+//Get post By Search
+export const getPostsBySearch = async (req, res) => {
+  const { searchQuery, tags } = req.query;
+
+  try {
+    const title = new RegExp(searchQuery, 'i');
+
+    const post = await postMessage.find({ $or: [{ title }, { tags: { $in: tags.split(',') } }] });
+    res.status(200).json({ data: post });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
   }
 };
 

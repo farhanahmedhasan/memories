@@ -25,7 +25,7 @@ const Posts = () => {
           {state.posts.map((post) => {
             const { _id } = post;
             return (
-              <Grid item key={_id} xs={12} sm={6} lg={4}>
+              <Grid item key={_id} xs={12} sm={6} md={4} lg={3}>
                 <Post {...post} />
               </Grid>
             );
