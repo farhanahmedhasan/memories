@@ -7,5 +7,8 @@ export const CHANGE_CURRENT_ID = 'CHANGE_CURRENT_ID';
 export const CLEAR_CURRENT_ID = 'CLEAR_CURRENT_ID';
 export const LIKE_POST = 'LIKE_POST';
 
+export const START_LOADING = 'START_LOADING';
+export const END_LOADING = 'END_LOADING';
+
 export const AUTH = 'AUTH';
 export const LOGOUT = 'LOGOUT';

@@ -57,8 +57,8 @@ const Form = () => {
   }
 
   return (
-    <Paper className={`${classes.paper}`}>
-      <form autoComplete='off' noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
+    <Paper className={`${classes.paper}`} elevation={6}>
+      <form autoComplete='off' className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
         <Typography variant='h6'>{state.currentId ? 'Edit' : 'Create'} a Memory</Typography>
 
         <TextField
@@ -68,6 +68,7 @@ const Form = () => {
           fullWidth
           value={postData.title}
           onChange={handleChange}
+          required
         />
 
         <TextField
@@ -77,6 +78,7 @@ const Form = () => {
           fullWidth
           value={postData.message}
           onChange={handleChange}
+          required
         />
 
         <TextField
@@ -86,6 +88,7 @@ const Form = () => {
           fullWidth
           value={postData.tags}
           onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })}
+          required
         />
 
         <div className={classes.textField}>

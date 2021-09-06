@@ -11,9 +11,9 @@ import Form from '../Form/Form';
 import Pagination from '../Pagination/Pagination';
 import useStyles from './styles';
 
-// function useQuery() {
-//   return new URLSearchParams(useLocation().search);
-// }
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 const Home = () => {
   const [search, setSearch] = useState('');
@@ -23,10 +23,11 @@ const Home = () => {
 
   const classes = useStyles();
   const history = useHistory();
-  // const query = useQuery();
+  const query = useQuery();
 
-  // const page = query.get('page') || 1;
-  // const searchQuery = query.get('searchQuery');
+  const page = +query.get('page') || 1;
+
+  const searchQuery = query.get('searchQuery');
 
   const searchPost = () => {
     if (search.trim() || tags) {
@@ -86,16 +87,18 @@ const Home = () => {
                 className={classes.input}
               />
 
-              <Button className={classes.searchBtn} onClick={searchPost} color='primary'>
+              <Button className={classes.searchBtn} onClick={searchPost} variant='outlined' color='primary'>
                 Search
               </Button>
             </AppBar>
 
             <Form />
 
-            <Paper elevation={6} className={classes.pagination}>
-              <Pagination />
-            </Paper>
+            {!tags.length && !searchQuery && (
+              <Paper elevation={6} className={classes.pagination}>
+                <Pagination page={page} />
+              </Paper>
+            )}
           </Grid>
         </Grid>
       </Container>

@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const postSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: [true, 'A Memory Must have a Title'],
+    // required: [true, 'A Memory Must have a Title'],
   },
 
   message: String,

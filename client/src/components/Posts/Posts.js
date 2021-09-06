@@ -1,22 +1,22 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { Grid, CircularProgress } from '@material-ui/core';
 import useStyle from './styles';
 
 import Post from '../Posts/Post/Post';
-import { usePostContext, getAllPosts } from '../../contexts/postsContext';
+import { usePostContext } from '../../contexts/postsContext';
 
 const Posts = () => {
-  const [state, dispatch] = usePostContext();
+  const [state] = usePostContext();
   const classes = useStyle();
 
-  useEffect(() => {
-    getAllPosts(dispatch);
-  }, [dispatch]);
+  if (!state.isLoading && !state.posts) {
+    return <h1>No post's Found</h1>;
+  }
 
   return (
     <>
-      {!state.posts.length ? (
+      {state.isLoading ? (
         <div className={classes.wrapperSpinner}>
           <CircularProgress className={classes.spinner} />
         </div>

@@ -21,6 +21,9 @@ export default makeStyles({
     height: '100%',
     position: 'relative',
   },
+  cardContent: {
+    padding: '8px 16px',
+  },
   overlay: {
     position: 'absolute',
     top: '20px',

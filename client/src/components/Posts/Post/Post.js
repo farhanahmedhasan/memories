@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Card, CardMedia, CardContent, CardActions, Button, Typography } from '@material-ui/core';
 import { ThumbUpAlt, ThumbUpAltOutlined, Delete, MoreHoriz } from '@material-ui/icons';
@@ -13,9 +13,11 @@ const Post = ({ name, title, creator, likes, message, createdAt, tags, selectedF
   const [, dispatch] = usePostContext();
   const [authState] = useAuthContext();
 
-  const user = JSON.parse(localStorage.getItem('profile'));
+  console.log('hi');
 
-  React.useEffect(() => {}, [authState]);
+  useEffect(() => {}, [authState]);
+
+  const user = JSON.parse(localStorage.getItem('profile'));
 
   //Likes Component
   const Likes = () => {
@@ -79,7 +81,7 @@ const Post = ({ name, title, creator, likes, message, createdAt, tags, selectedF
         {title}
       </Typography>
 
-      <CardContent>
+      <CardContent className={classes.cardContent}>
         <Typography variant='body2' color='textSecondary' component='p'>
           {message}
         </Typography>

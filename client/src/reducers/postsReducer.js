@@ -7,19 +7,36 @@ import {
   CHANGE_CURRENT_ID,
   CLEAR_CURRENT_ID,
   LIKE_POST,
+  START_LOADING,
+  END_LOADING,
 } from '../constants/actionTypes';
 
 const initialState = {
   posts: [],
   currentId: null,
+  isLoading: true,
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case START_LOADING:
+      return {
+        ...state,
+        isLoading: true,
+      };
+
+    case END_LOADING:
+      return {
+        ...state,
+        isLoading: false,
+      };
+
     case FETCH_ALL_POST:
       return {
         ...state,
-        posts: action.payload,
+        posts: action.payload.data.posts,
+        currentPage: action.payload.currentPage,
+        totalPages: action.payload.totalPages,
       };
 
     case SEARCHPOST:

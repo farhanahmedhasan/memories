@@ -24,14 +24,21 @@ export const createPost = async (req, res) => {
 
 //Read All Post
 export const getPosts = async (req, res) => {
+  const { page } = req.query;
+
   try {
-    const postMessages = await postMessage.find();
+    const LIMIT = 8;
+    const startIndex = (Number(page) - 1) * LIMIT; //Get the starting Index of every Page
+    const total = await postMessage.countDocuments({});
+
+    const posts = await postMessage.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex);
 
     res.status(200).json({
       status: 'success',
-      result: postMessages.length,
+      currentPage: Number(page),
+      totalPages: Math.ceil(total / LIMIT),
       data: {
-        postMessages,
+        posts,
       },
     });
   } catch (err) {

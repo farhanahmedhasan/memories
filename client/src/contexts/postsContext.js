@@ -3,6 +3,8 @@ import React, { useContext, useReducer } from 'react';
 import { reducer, initialState } from '../reducers/postsReducer';
 import * as api from '../api';
 import {
+  START_LOADING,
+  END_LOADING,
   FETCH_ALL_POST,
   SEARCHPOST,
   CREATE_A_POST,
@@ -13,11 +15,14 @@ import {
   LIKE_POST,
 } from '../constants/actionTypes';
 
-const getAllPosts = async (dispatch) => {
+const getAllPosts = async (dispatch, page) => {
   try {
-    const { data } = await api.fetchPosts();
-    const posts = data.data.postMessages;
-    dispatch({ type: FETCH_ALL_POST, payload: posts });
+    dispatch({ type: START_LOADING });
+
+    const { data } = await api.fetchPosts(page);
+    dispatch({ type: FETCH_ALL_POST, payload: data });
+
+    dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error);
   }
@@ -25,10 +30,13 @@ const getAllPosts = async (dispatch) => {
 
 const createPost = async (dispatch, postData) => {
   try {
+    dispatch({ type: START_LOADING });
+
     const { data } = await api.createPost(postData);
     const post = data.data.postMessages;
-
     dispatch({ type: CREATE_A_POST, payload: post });
+
+    dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error);
   }
@@ -76,14 +84,14 @@ const likePost = async (dispatch, id) => {
 
 //Searching Query And Tags
 const getPostBySearch = async (dispatch, searchObject) => {
-  console.log(searchObject);
+  dispatch({ type: START_LOADING });
+
   const {
     data: { data },
   } = await api.fetchPostBySearch(searchObject);
-
-  console.log(data);
-
   dispatch({ type: SEARCHPOST, payload: data });
+
+  dispatch({ type: END_LOADING });
   try {
   } catch (error) {
     console.log(error);
