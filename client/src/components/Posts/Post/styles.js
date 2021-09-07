@@ -56,4 +56,9 @@ export default makeStyles({
   cardActionLike: {
     margin: '0 8px 0 3px',
   },
+
+  buttonBase: {
+    display: 'block',
+    textAlign: 'initial',
+  },
 });

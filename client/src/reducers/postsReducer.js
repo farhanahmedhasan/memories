@@ -1,5 +1,6 @@
 import {
   FETCH_ALL_POST,
+  GET_SINGLE_POST,
   SEARCHPOST,
   CREATE_A_POST,
   UPDATE_A_POST,
@@ -13,6 +14,7 @@ import {
 
 const initialState = {
   posts: [],
+  currentSinglePost: null,
   currentId: null,
   isLoading: true,
 };
@@ -37,6 +39,12 @@ const reducer = (state, action) => {
         posts: action.payload.data.posts,
         currentPage: action.payload.currentPage,
         totalPages: action.payload.totalPages,
+      };
+
+    case GET_SINGLE_POST:
+      return {
+        ...state,
+        currentSinglePost: action.payload,
       };
 
     case SEARCHPOST:

@@ -48,6 +48,22 @@ export const getPosts = async (req, res) => {
   }
 };
 
+//Get a single post
+export const getSinglePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const singlePost = await postMessage.findById(id);
+
+    res.status(200).json({
+      singlePost,
+    });
+  } catch (error) {
+    res.status(404).json({
+      message: error,
+    });
+  }
+};
+
 //Get post By Search
 export const getPostsBySearch = async (req, res) => {
   const { searchQuery, tags } = req.query;

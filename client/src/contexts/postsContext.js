@@ -6,6 +6,7 @@ import {
   START_LOADING,
   END_LOADING,
   FETCH_ALL_POST,
+  GET_SINGLE_POST,
   SEARCHPOST,
   CREATE_A_POST,
   UPDATE_A_POST,
@@ -25,6 +26,19 @@ const getAllPosts = async (dispatch, page) => {
     dispatch({ type: END_LOADING });
   } catch (error) {
     console.log(error);
+  }
+};
+
+const getSinglePost = async (dispatch, id) => {
+  try {
+    dispatch({ type: START_LOADING });
+
+    const { data } = await api.fetchSinglePost(id);
+    dispatch({ type: GET_SINGLE_POST, payload: data.singlePost });
+
+    dispatch({ type: END_LOADING });
+  } catch (error) {
+    console.log(error.message);
   }
 };
 
@@ -119,6 +133,7 @@ export {
   PostProvider,
   usePostContext,
   getAllPosts,
+  getSinglePost,
   createPost,
   setCurrentId,
   clearCurId,

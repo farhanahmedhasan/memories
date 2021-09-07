@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
-import { Card, CardMedia, CardContent, CardActions, Button, Typography } from '@material-ui/core';
-import { ThumbUpAlt, ThumbUpAltOutlined, Delete, MoreHoriz } from '@material-ui/icons';
+import { Card, CardMedia, CardContent, CardActions, Button, Typography, ButtonBase } from '@material-ui/core';
+import { Delete, MoreHoriz } from '@material-ui/icons';
 import moment from 'moment';
 
 import useStyle from './styles';
+import Likes from './Like';
 import { setCurrentId, usePostContext, deletePost, likePost } from '../../../contexts/postsContext';
 import { useAuthContext } from '../../../contexts/authContext';
 
@@ -12,81 +14,51 @@ const Post = ({ name, title, creator, likes, message, createdAt, tags, selectedF
   const classes = useStyle();
   const [, dispatch] = usePostContext();
   const [authState] = useAuthContext();
-
-  console.log('hi');
+  const history = useHistory();
 
   useEffect(() => {}, [authState]);
 
+  const openMemory = () => history.push(`posts/${_id}`);
+
   const user = JSON.parse(localStorage.getItem('profile'));
-
-  //Likes Component
-  const Likes = () => {
-    if (likes.length > 0) {
-      return likes.find((like) => like === (user?.result?.googleId || user?.result?._id)) ? (
-        <>
-          <ThumbUpAlt fontSize='small' />
-          &nbsp;
-          {likes.length > 2
-            ? `You and ${likes.length - 1} others`
-            : `${likes.length} like${likes.length > 1 ? 's' : ''}`}
-        </>
-      ) : (
-        <>
-          <ThumbUpAltOutlined fontSize='small' />
-          &nbsp;{likes.length} {likes.length === 1 ? 'Like' : 'Likes'}
-        </>
-      );
-    }
-
-    return (
-      <>
-        <ThumbUpAltOutlined fontSize='small' />
-        &nbsp;Like
-      </>
-    );
-  };
-
-  //Likes component End
 
   return (
     <Card className={classes.card} raised elevation={6}>
-      <CardMedia className={classes.media} image={selectedFile} title={title} />
-      <div className={classes.overlay}>
-        <Typography variant='h6'>{name}</Typography>
-        <Typography variant='body2'>{moment.utc(createdAt).fromNow()}</Typography>
-      </div>
-
-      <div className={classes.overlay2}>
-        {/* Edit Button */}
-        {(user?.result.googleId === creator || user?.result?._id === creator) && (
-          <Button
-            size='small'
-            style={{ color: 'white' }}
-            onClick={() => {
-              setCurrentId(dispatch, _id);
-            }}
-          >
-            <MoreHoriz fontSize='medium' />
-          </Button>
-        )}
-      </div>
-
-      <div className={classes.details}>
-        <Typography variant='body2' color='textSecondary' component='h2'>
-          {tags.map((tag) => `#${tag} `)}
+      {/* This is responsible for opening a single Post */}
+      <ButtonBase onClick={openMemory} className={classes.buttonBase}>
+        <CardMedia className={classes.media} image={selectedFile} title={title} />
+        <div className={classes.overlay}>
+          <Typography variant='h6'>{name}</Typography>
+          <Typography variant='body2'>{moment.utc(createdAt).fromNow()}</Typography>
+        </div>
+        <div className={classes.overlay2}>
+          {/* Edit Button */}
+          {(user?.result.googleId === creator || user?.result?._id === creator) && (
+            <Button
+              size='small'
+              style={{ color: 'white' }}
+              onClick={() => {
+                setCurrentId(dispatch, _id);
+              }}
+            >
+              <MoreHoriz fontSize='medium' />
+            </Button>
+          )}
+        </div>
+        <div className={classes.details}>
+          <Typography variant='body2' color='textSecondary' component='h2'>
+            {tags.map((tag) => `#${tag} `)}
+          </Typography>
+        </div>
+        <Typography className={classes.title} gutterBottom variant='h5' component='h2'>
+          {title}
         </Typography>
-      </div>
-
-      <Typography className={classes.title} gutterBottom variant='h5' component='h2'>
-        {title}
-      </Typography>
-
-      <CardContent className={classes.cardContent}>
-        <Typography variant='body2' color='textSecondary' component='p'>
-          {message}
-        </Typography>
-      </CardContent>
-
+        <CardContent className={classes.cardContent}>
+          <Typography variant='body2' color='textSecondary' component='p'>
+            {message}
+          </Typography>
+        </CardContent>
+      </ButtonBase>
       <CardActions className={classes.cardActions}>
         <Button
           size='small'
@@ -96,7 +68,7 @@ const Post = ({ name, title, creator, likes, message, createdAt, tags, selectedF
             likePost(dispatch, _id);
           }}
         >
-          <Likes />
+          <Likes likes={likes} />
         </Button>
 
         {/* Delete Button */}
