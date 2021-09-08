@@ -17,8 +17,6 @@ const PostDetails = () => {
 
   const openMemory = (id) => history.push(`/posts/${id}`);
 
-  const recommendedPosts = state.posts.filter((post) => post._id !== state.currentSinglePost._id);
-
   useEffect(() => {
     getSinglePost(dispatch, id);
   }, [dispatch, id]);
@@ -39,6 +37,8 @@ const PostDetails = () => {
       </Paper>
     );
   }
+
+  const recommendedPosts = state.posts.filter((post) => post._id !== state.currentSinglePost._id);
 
   return (
     <Paper style={{ padding: '20px', borderRadius: '16px' }} elevation={6}>
