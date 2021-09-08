@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { Paper, Divider, Typography, CircularProgress } from '@material-ui/core';
 import moment from 'moment';
@@ -11,7 +11,7 @@ import CommentSection from './CommentSection';
 const PostDetails = () => {
   const classes = useStyles();
   const [state, dispatch] = usePostContext();
-  const history = useHistory();
+  // const history = useHistory();
   const { id } = useParams();
 
   useEffect(() => {

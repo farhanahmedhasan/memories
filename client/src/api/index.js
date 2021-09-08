@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-// const url = 'https://mern-memories-first.herokuapp.com';
+const url = 'https://mern-memories-app-01.herokuapp.com';
 // const url = 'http://localhost:5000';
 
-const API = axios.create({ baseURL: 'http://localhost:5000' });
+const API = axios.create({ baseURL: url });
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem('profile')) {

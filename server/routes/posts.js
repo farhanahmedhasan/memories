@@ -14,8 +14,8 @@ import authMiddleware from '../middleware/auth.js';
 const router = express.Router();
 
 router.get('/', getPosts);
-router.get('/:id', getSinglePost);
 router.get('/search', getPostsBySearch);
+router.get('/:id', getSinglePost);
 
 router.post('/', authMiddleware, createPost);
 router.patch('/:id', authMiddleware, updatePost);
