@@ -1,30 +1,43 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import { Paper, Divider, Typography, CircularProgress } from '@material-ui/core';
 import moment from 'moment';
 
 import useStyles from './styles';
-import { usePostContext, getSinglePost } from '../../contexts/postsContext';
+import { usePostContext, getSinglePost, getPostBySearch } from '../../contexts/postsContext';
 import CommentSection from './CommentSection';
+import RecommendedPosts from './RecommendedPosts';
 
 const PostDetails = () => {
   const classes = useStyles();
   const [state, dispatch] = usePostContext();
-  // const history = useHistory();
   const { id } = useParams();
+  const history = useHistory();
+
+  const openMemory = (id) => history.push(`/posts/${id}`);
+
+  const recommendedPosts = state.posts.filter((post) => post._id !== state.currentSinglePost._id);
 
   useEffect(() => {
     getSinglePost(dispatch, id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [dispatch, id]);
+
+  //Dispatching an action for Recommended posts
+  useEffect(() => {
+    if (state.currentSinglePost) {
+      getPostBySearch(dispatch, { search: 'none', tags: state.currentSinglePost.tags.join(',') });
+    }
+  }, [dispatch, state.currentSinglePost]);
 
   if (!state.currentSinglePost) return null;
 
   if (state.isLoading) {
-    <Paper elevation={6} className={classes.loadingPaper}>
-      <CircularProgress size='7em' />
-    </Paper>;
+    return (
+      <Paper elevation={6} className={classes.loadingPaper}>
+        <CircularProgress size='7em' />
+      </Paper>
+    );
   }
 
   return (
@@ -36,7 +49,7 @@ const PostDetails = () => {
           </Typography>
 
           <Typography gutterBottom variant='h6' component='h2' color='textSecondary'>
-            {state.currentSinglePost.tags.map((tag) => `#tag `)}
+            {state.currentSinglePost.tags.map((tag) => `#${tag} `)}
           </Typography>
 
           <Typography gutterBottom variant='body1' component='p'>
@@ -70,6 +83,19 @@ const PostDetails = () => {
       </div>
 
       {/* Recommended Section */}
+      {!!recommendedPosts.length && (
+        <div className={classes.section}>
+          <Typography gutterBottom variant='h5'>
+            You might also like:
+          </Typography>
+          <div className={classes.recommendedPost}>
+            {recommendedPosts.map((post) => {
+              return <RecommendedPosts key={post._id} post={post} openMemory={openMemory} />;
+            })}
+          </div>
+          <Divider />
+        </div>
+      )}
     </Paper>
   );
 };

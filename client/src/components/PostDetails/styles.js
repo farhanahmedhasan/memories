@@ -13,13 +13,15 @@ export default makeStyles((theme) => ({
   card: {
     display: 'flex',
     width: '100%',
+    justifyContent: 'space-between',
+
     [theme.breakpoints.down('sm')]: {
       flexWrap: 'wrap',
       flexDirection: 'column',
     },
   },
 
-  sectoin: { borderRadius: '20px', margin: '10px', flex: 1 },
+  section: { borderRadius: '20px', margin: '10px' },
 
   imageSection: {
     marginLeft: '20px',
@@ -33,5 +35,12 @@ export default makeStyles((theme) => ({
     objectFit: 'cover',
     width: '100%',
     maxHeight: '600px',
+  },
+
+  recommendedPost: {
+    display: 'flex',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+    },
   },
 }));
