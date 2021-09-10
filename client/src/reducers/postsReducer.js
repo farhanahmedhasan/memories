@@ -8,6 +8,7 @@ import {
   CHANGE_CURRENT_ID,
   CLEAR_CURRENT_ID,
   LIKE_POST,
+  ADD_COMMENT,
   START_LOADING,
   END_LOADING,
 } from '../constants/actionTypes';
@@ -89,19 +90,31 @@ const reducer = (state, action) => {
       };
 
     case LIKE_POST:
-      // const updatedPostWithLike = state.posts.map((post) => (post._id === action.payload._id ? action.payload : post));
       const updatedPostWithLike = state.posts.map((post) => {
         if (post._id === action.payload.postId) {
-          return {
-            ...post,
-            likes: action.payload.updatedLike,
-          };
+          return { ...post, likes: action.payload.updatedLike };
         }
         return post;
       });
       return {
         ...state,
         posts: updatedPostWithLike,
+      };
+
+    case ADD_COMMENT:
+      const updatedPostWithComment = state.posts.map((post) => {
+        //Update the post only which recieved a new comments
+        if (post._id === action.payload._id) {
+          return { ...post, comments: action.payload };
+        }
+
+        //Normally Return The post
+        return post;
+      });
+
+      return {
+        ...state,
+        posts: updatedPostWithComment,
       };
 
     default:

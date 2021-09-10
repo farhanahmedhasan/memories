@@ -43,7 +43,7 @@ const PostDetails = () => {
   return (
     <Paper style={{ padding: '20px', borderRadius: '16px' }} elevation={6}>
       <div className={classes.card}>
-        <div className={classes.sectoin}>
+        <div className={classes.section}>
           <Typography variant='h4' component='h2'>
             {state.currentSinglePost.title}
           </Typography>
@@ -59,13 +59,15 @@ const PostDetails = () => {
           <Typography variant='h6'>Created By: {state.currentSinglePost.name}</Typography>
           <Typography variant='body1'>{moment(state.currentSinglePost.createdAt).fromNow()}</Typography>
 
+          {/* Real Time Chating */}
           <Divider style={{ margin: '20px 0' }} />
           <Typography variant='body1'>
             <strong>Realtime Chat - coming soon!</strong>
           </Typography>
 
+          {/* Comment Section */}
           <Divider style={{ margin: '20px 0' }} />
-          <CommentSection />
+          <CommentSection post={state.currentSinglePost} />
           <Divider style={{ margin: '20px 0' }} />
         </div>
 
@@ -83,7 +85,7 @@ const PostDetails = () => {
       </div>
 
       {/* Recommended Section */}
-      {!!recommendedPosts.length && (
+      {/* {!!recommendedPosts.length && (
         <div className={classes.section}>
           <Typography gutterBottom variant='h5'>
             You might also like:
@@ -95,7 +97,7 @@ const PostDetails = () => {
           </div>
           <Divider />
         </div>
-      )}
+      )} */}
     </Paper>
   );
 };

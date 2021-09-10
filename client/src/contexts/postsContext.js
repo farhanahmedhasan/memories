@@ -14,6 +14,7 @@ import {
   CHANGE_CURRENT_ID,
   CLEAR_CURRENT_ID,
   LIKE_POST,
+  ADD_COMMENT,
 } from '../constants/actionTypes';
 
 const getAllPosts = async (dispatch, page) => {
@@ -67,6 +68,7 @@ const updatePost = async (dispatch, postData, id) => {
   }
 };
 
+//Deleting A Post
 const deletePost = async (dispatch, id) => {
   try {
     await api.deletePost(id);
@@ -82,6 +84,7 @@ const setCurrentId = (dispatch, curId) => {
 
 const clearCurId = (dispatch) => dispatch({ type: CLEAR_CURRENT_ID });
 
+//Liking A Post
 const likePost = async (dispatch, id) => {
   try {
     const { data } = await api.likePost(id);
@@ -91,6 +94,18 @@ const likePost = async (dispatch, id) => {
     const updatedInfo = { updatedLike, postId };
 
     dispatch({ type: LIKE_POST, payload: updatedInfo });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//Adding a Comment
+const getComments = async (dispatch, value, id) => {
+  try {
+    const updatedComments = await api.comment(value, id);
+    dispatch({ type: ADD_COMMENT, payload: updatedComments.data });
+
+    return updatedComments.data;
   } catch (error) {
     console.log(error);
   }
@@ -141,4 +156,5 @@ export {
   deletePost,
   likePost,
   getPostBySearch,
+  getComments,
 };

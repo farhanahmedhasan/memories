@@ -67,7 +67,6 @@ export const getSinglePost = async (req, res) => {
 //Get post By Search
 export const getPostsBySearch = async (req, res) => {
   const { searchQuery, tags } = req.query;
-  console.log(tags);
 
   try {
     const title = new RegExp(searchQuery, 'i');
@@ -162,4 +161,18 @@ export const likePost = async (req, res) => {
       message: err,
     });
   }
+};
+
+//Commenting on a Post
+export const commentPost = async (req, res) => {
+  const { id } = req.params;
+  const { value } = req.body;
+
+  try {
+    const post = await postMessage.findById(id);
+    post.comments.push(value);
+
+    const updatedPost = await postMessage.findByIdAndUpdate(id, post, { new: true });
+    res.status(200).json(updatedPost.comments);
+  } catch (error) {}
 };

@@ -8,6 +8,7 @@ import {
   updatePost,
   deletePost,
   likePost,
+  commentPost,
 } from '../controllers/posts.js';
 import authMiddleware from '../middleware/auth.js';
 
@@ -18,8 +19,11 @@ router.get('/search', getPostsBySearch);
 router.get('/:id', getSinglePost);
 
 router.post('/', authMiddleware, createPost);
-router.patch('/:id', authMiddleware, updatePost);
-router.delete('/:id', authMiddleware, deletePost);
+router.post('/:id/commentPost', authMiddleware, commentPost);
+
 router.patch('/:id/likePost', authMiddleware, likePost);
+router.patch('/:id', authMiddleware, updatePost);
+
+router.delete('/:id', authMiddleware, deletePost);
 
 export default router;

@@ -5,3 +5,6 @@ body {
 .WAMuiChipInput-inputRoot-23.WAMuiChipInput-outlined-26 {
   padding-top: 0 !important;
 }
+.MuiOutlinedInput-multiline {
+  padding: 0 !important;
+}

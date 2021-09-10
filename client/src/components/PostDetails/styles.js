@@ -21,7 +21,7 @@ export default makeStyles((theme) => ({
     },
   },
 
-  section: { borderRadius: '20px', margin: '10px' },
+  section: { borderRadius: '20px', margin: '10px', flex: '1' },
 
   imageSection: {
     marginLeft: '20px',
@@ -34,7 +34,7 @@ export default makeStyles((theme) => ({
     borderRadius: '20px',
     objectFit: 'cover',
     width: '100%',
-    maxHeight: '600px',
+    maxHeight: '400px',
   },
 
   recommendedPost: {
@@ -42,5 +42,17 @@ export default makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
     },
+  },
+
+  commentsOuterContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+
+  commentsInnerContainer: {
+    height: '200px',
+    overflowY: 'auto',
+    marginRight: '30px',
+    flex: '1',
   },
 }));

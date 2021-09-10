@@ -25,25 +25,25 @@ const Post = ({ name, title, creator, likes, message, createdAt, tags, selectedF
   return (
     <Card className={classes.card} raised elevation={6}>
       {/* This is responsible for opening a single Post */}
+      <div className={classes.overlay2}>
+        {/* Edit Button */}
+        {(user?.result.googleId === creator || user?.result?._id === creator) && (
+          <Button
+            size='small'
+            style={{ color: 'white' }}
+            onClick={() => {
+              setCurrentId(dispatch, _id);
+            }}
+          >
+            <MoreHoriz fontSize='medium' />
+          </Button>
+        )}
+      </div>
       <ButtonBase onClick={openMemory} className={classes.buttonBase}>
         <CardMedia className={classes.media} image={selectedFile} title={title} />
         <div className={classes.overlay}>
           <Typography variant='h6'>{name}</Typography>
           <Typography variant='body2'>{moment.utc(createdAt).fromNow()}</Typography>
-        </div>
-        <div className={classes.overlay2}>
-          {/* Edit Button */}
-          {(user?.result.googleId === creator || user?.result?._id === creator) && (
-            <Button
-              size='small'
-              style={{ color: 'white' }}
-              onClick={() => {
-                setCurrentId(dispatch, _id);
-              }}
-            >
-              <MoreHoriz fontSize='medium' />
-            </Button>
-          )}
         </div>
         <div className={classes.details}>
           <Typography variant='body2' color='textSecondary' component='h2'>
