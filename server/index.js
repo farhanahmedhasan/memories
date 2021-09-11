@@ -9,13 +9,7 @@ const app = express();
 // app.use(express.urlencoded({ limit: '30mb' })); //Deprecated
 app.use(express.json({ limit: '30mb' }));
 
-const corsOptions = {
-  origin: 'https://mern-memories-app-01.herokuapp.com',
-  credentials: true, //access-control-allow-credentials:true
-  optionSuccessStatus: 200,
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 //Mountung Routes
 app.use('/posts', postRoutes);
