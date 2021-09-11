@@ -7,16 +7,21 @@ import { usePostContext, getComments } from '../../contexts/postsContext';
 
 const CommentSection = ({ post }) => {
   const classes = useStyles();
-  const [state, dispatch] = usePostContext();
+  const [, dispatch] = usePostContext();
 
   const [comments, setComments] = useState(post?.comments);
   const [comment, setComment] = useState('');
+  const [readMore, setReadMore] = useState(false);
   const commentsRef = useRef();
 
   const user = JSON.parse(localStorage.getItem('profile'));
 
   const isDiabled = user && comment;
   const btnText = user ? 'Add a comment' : 'Login to add a comment';
+
+  const seeMoreInfo = () => {
+    setReadMore(!readMore);
+  };
 
   const handleClick = async () => {
     const finalComment = `${user?.result.name}: ${comment}`;
@@ -35,7 +40,10 @@ const CommentSection = ({ post }) => {
         {comments.map((comment, i) => (
           <Typography key={i}>
             <strong>{comment.split(': ')[0]}</strong>
-            {comment.split(':')[1]}
+            {readMore ? comment.split(':')[1] : `${comment.split(':')[1].substring(0, 150)}...`}
+            <button type='button' onClick={seeMoreInfo}>
+              {!readMore ? `See More` : `See Less`}
+            </button>
           </Typography>
         ))}
         <div ref={commentsRef} />

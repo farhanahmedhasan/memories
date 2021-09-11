@@ -16,15 +16,20 @@ const Post = ({ name, title, creator, likes, message, createdAt, tags, selectedF
   const [authState] = useAuthContext();
   const [AllLike, setAllLike] = useState(likes);
   const history = useHistory();
-
   const user = JSON.parse(localStorage.getItem('profile'));
+  const readMore = false;
 
   const userId = user?.result?.googleId || user?.result?._id;
   const hasLikedPost = likes.find((like) => like === userId);
 
+  const tagsStr = tags.map((tag) => `#${tag} `).join('');
+
   useEffect(() => {}, [authState]);
 
-  const openMemory = () => history.push(`posts/${_id}`);
+  const openMemory = (e) => {
+    e.preventDefault();
+    history.push(`/posts/${_id}`);
+  };
 
   const handleLike = async () => {
     likePost(dispatch, _id);
@@ -60,15 +65,19 @@ const Post = ({ name, title, creator, likes, message, createdAt, tags, selectedF
         </div>
         <div className={classes.details}>
           <Typography variant='body2' color='textSecondary' component='h2'>
-            {tags.map((tag) => `#${tag} `)}
+            {tagsStr.length > 20
+              ? readMore
+                ? tags.map((tag) => `#${tag} `)
+                : `${tagsStr.substring(0, 20)}...`
+              : tags.map((tag) => `#${tag} `)}
           </Typography>
         </div>
         <Typography className={classes.title} gutterBottom variant='h5' component='h2'>
-          {title}
+          {title.length > 50 ? (readMore ? title : `${title.substring(0, 15)}...`) : title}
         </Typography>
         <CardContent className={classes.cardContent}>
           <Typography variant='body2' color='textSecondary' component='p'>
-            {message}
+            {message.length > 150 ? (readMore ? message : `${message.substring(0, 150)}...`) : message}
           </Typography>
         </CardContent>
       </ButtonBase>
