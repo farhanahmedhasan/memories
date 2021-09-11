@@ -85,7 +85,7 @@ const PostDetails = () => {
       </div>
 
       {/* Recommended Section */}
-      {/* {!!recommendedPosts.length && (
+      {!!recommendedPosts.length && (
         <div className={classes.section}>
           <Typography gutterBottom variant='h5'>
             You might also like:
@@ -97,7 +97,7 @@ const PostDetails = () => {
           </div>
           <Divider />
         </div>
-      )} */}
+      )}
     </Paper>
   );
 };

@@ -1,11 +1,9 @@
 import React from 'react';
 import { ThumbUpAlt, ThumbUpAltOutlined } from '@material-ui/icons';
 
-const Likes = ({ likes }) => {
-  const user = JSON.parse(localStorage.getItem('profile'));
-
+const Likes = ({ likes, hasLikedPost }) => {
   if (likes.length > 0) {
-    return likes.find((like) => like === (user?.result?.googleId || user?.result?._id)) ? (
+    return hasLikedPost ? (
       <>
         <ThumbUpAlt fontSize='small' />
         &nbsp;

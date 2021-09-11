@@ -11,6 +11,8 @@ const CommentSection = ({ post }) => {
 
   const [comments, setComments] = useState(post?.comments);
   const [comment, setComment] = useState('');
+  const commentsRef = useRef();
+
   const user = JSON.parse(localStorage.getItem('profile'));
 
   const isDiabled = user && comment;
@@ -21,6 +23,7 @@ const CommentSection = ({ post }) => {
     const newComments = await getComments(dispatch, finalComment, post._id);
     setComments(newComments);
     setComment('');
+    commentsRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -30,8 +33,12 @@ const CommentSection = ({ post }) => {
           Comments
         </Typography>
         {comments.map((comment, i) => (
-          <Typography key={i}>{comment}</Typography>
+          <Typography key={i}>
+            <strong>{comment.split(': ')[0]}</strong>
+            {comment.split(':')[1]}
+          </Typography>
         ))}
+        <div ref={commentsRef} />
       </div>
 
       {user?.result?.name && (

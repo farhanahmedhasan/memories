@@ -14,6 +14,7 @@ export default makeStyles((theme) => ({
     display: 'flex',
     width: '100%',
     justifyContent: 'space-between',
+    alignItems: 'center',
 
     [theme.breakpoints.down('sm')]: {
       flexWrap: 'wrap',

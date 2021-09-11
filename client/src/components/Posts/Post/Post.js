@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { Card, CardMedia, CardContent, CardActions, Button, Typography, ButtonBase } from '@material-ui/core';
@@ -14,13 +14,26 @@ const Post = ({ name, title, creator, likes, message, createdAt, tags, selectedF
   const classes = useStyle();
   const [, dispatch] = usePostContext();
   const [authState] = useAuthContext();
+  const [AllLike, setAllLike] = useState(likes);
   const history = useHistory();
+
+  const user = JSON.parse(localStorage.getItem('profile'));
+
+  const userId = user?.result?.googleId || user?.result?._id;
+  const hasLikedPost = likes.find((like) => like === userId);
 
   useEffect(() => {}, [authState]);
 
   const openMemory = () => history.push(`posts/${_id}`);
 
-  const user = JSON.parse(localStorage.getItem('profile'));
+  const handleLike = async () => {
+    likePost(dispatch, _id);
+    if (hasLikedPost) {
+      setAllLike(likes.filter((likeId) => likeId !== userId));
+    } else {
+      setAllLike([...likes, userId]);
+    }
+  };
 
   return (
     <Card className={classes.card} raised elevation={6}>
@@ -60,15 +73,8 @@ const Post = ({ name, title, creator, likes, message, createdAt, tags, selectedF
         </CardContent>
       </ButtonBase>
       <CardActions className={classes.cardActions}>
-        <Button
-          size='small'
-          color='primary'
-          disabled={!user?.result}
-          onClick={() => {
-            likePost(dispatch, _id);
-          }}
-        >
-          <Likes likes={likes} />
+        <Button size='small' color='primary' disabled={!user?.result} onClick={handleLike}>
+          <Likes likes={AllLike} hasLikedPost={hasLikedPost} />
         </Button>
 
         {/* Delete Button */}
